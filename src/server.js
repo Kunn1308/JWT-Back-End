@@ -5,6 +5,8 @@ require("dotenv").config();
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+
 //config view engine
 configViewEngine(app);
 
