@@ -26,8 +26,14 @@ const createNewUser = async (email, username, password) => {
 
 const getUserList = async (req, res) => {
     let users = [];
-    const [results, fields] = await connection.query("SELECT * FROM users");
-    console.log(results);
+    try {
+        const [results, fields] = await connection.query("SELECT * FROM users");
+        users = results;
+    } catch (err) {
+        console.log(err);
+        return users;
+    }
+    return users;
 };
 
 export default { createNewUser, getUserList };
