@@ -24,16 +24,17 @@ const createNewUser = async (email, username, password) => {
     );
 };
 
-const getUserList = async (req, res) => {
-    let users = [];
+const getUserList = async () => {
     try {
-        const [results, fields] = await connection.query("SELECT * FROM users");
-        users = results;
+        const [rows, fields] = await connection.query("SELECT * FROM users");
+        return rows;
     } catch (err) {
         console.log(err);
-        return users;
     }
-    return users;
 };
 
-export default { createNewUser, getUserList };
+const deleteUser = async (id) => {
+    return await connection.query("DELETE FROM users WHERE id = ?", [id]);
+};
+
+export default { createNewUser, getUserList, deleteUser };

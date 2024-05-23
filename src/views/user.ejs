@@ -49,12 +49,14 @@
                         <tbody>
                             <% userList.forEach((user, index)=>{ %>
                             <tr>
-                                <th scope="row"><%= index + 1 %></th>
+                                <th scope="row"><%= user.id %></th>
                                 <td><%= user.email %></td>
                                 <td><%= user.username %></td>
                                 <td>
                                     <button class="btn btn-warning">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
+                                    <form style="display: inline" action="/delete-user/<%= user.id %>?_method=DELETE" method="POST">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             <%});%>
