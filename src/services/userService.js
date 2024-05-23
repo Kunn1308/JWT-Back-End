@@ -19,23 +19,23 @@ const hashUserPassword = (password) => {
 const createNewUser = async (email, username, password) => {
     let hashPassword = hashUserPassword(password);
     return await connection.query(
-        "INSERT INTO Users (email, username, password) VALUES (?,?,?)",
+        "INSERT INTO User (email, username, password) VALUES (?,?,?)",
         [email, username, hashPassword]
     );
 };
 
 const getUserList = async () => {
-    const [rows, fields] = await connection.query("SELECT * FROM Users");
+    const [rows, fields] = await connection.query("SELECT * FROM User");
     return rows;
 };
 
 const deleteUser = async (id) => {
-    return await connection.query("DELETE FROM Users WHERE id = ?", [id]);
+    return await connection.query("DELETE FROM User WHERE id = ?", [id]);
 };
 
 const getUserById = async (id) => {
     const [rows, fields] = await connection.query(
-        "SELECT * FROM Users WHERE id = ?",
+        "SELECT * FROM User WHERE id = ?",
         [id]
     );
     let user = rows && rows.length ? rows[0] : [];
@@ -44,7 +44,7 @@ const getUserById = async (id) => {
 
 const updateUser = async (email, username, id) => {
     return await connection.query(
-        "UPDATE Users SET email = ?, username = ? WHERE id = ?",
+        "UPDATE User SET email = ?, username = ? WHERE id = ?",
         [email, username, id]
     );
 };

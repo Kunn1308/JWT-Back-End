@@ -6,6 +6,9 @@
         "port": "3307",
         "host": "127.0.0.1",
         "dialect": "mysql",
+        "define": {
+            "freezeTableName": true
+        },
         "timezone": "+07:00"
     },
     "test": {
