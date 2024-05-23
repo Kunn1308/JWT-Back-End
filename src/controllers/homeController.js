@@ -21,9 +21,24 @@ const handleDeleteUser = async (req, res) => {
     res.redirect("back");
 };
 
+const getUpdateUserPage = async (req, res) => {
+    let id = req.params.id;
+    let user = await userService.getUserById(id);
+    res.render("update-user", { user });
+};
+
+const handleUpdateUser = async (req, res) => {
+    let { email, username } = req.body;
+    let id = req.params.id;
+    await userService.updateUser(email, username, id);
+    res.redirect("/user");
+};
+
 export default {
     handleHelloWorld,
     handleUserPage,
     handleCreateNewUser,
     handleDeleteUser,
+    getUpdateUserPage,
+    handleUpdateUser,
 };
