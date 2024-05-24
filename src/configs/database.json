@@ -9,6 +9,7 @@
         "define": {
             "freezeTableName": true
         },
+        "logging": false,
         "timezone": "+07:00"
     },
     "test": {

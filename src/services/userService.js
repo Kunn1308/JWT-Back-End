@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import mysql from "mysql2/promise";
+import db from "../models";
 
 // Create the connection to database
 const connection = mysql.createPool({
@@ -18,10 +19,11 @@ const hashUserPassword = (password) => {
 
 const createNewUser = async (email, username, password) => {
     let hashPassword = hashUserPassword(password);
-    return await connection.query(
-        "INSERT INTO User (email, username, password) VALUES (?,?,?)",
-        [email, username, hashPassword]
-    );
+    await db.User.create({
+        username: username,
+        email: email,
+        password: hashPassword,
+    });
 };
 
 const getUserList = async () => {
