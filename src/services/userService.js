@@ -27,28 +27,43 @@ const createNewUser = async (email, username, password) => {
 };
 
 const getUserList = async () => {
-    const [rows, fields] = await connection.query("SELECT * FROM User");
-    return rows;
+    return await db.User.findAll();
+    // const [rows, fields] = await connection.query("SELECT * FROM User");
+    // return rows;
 };
 
-const deleteUser = async (id) => {
-    return await connection.query("DELETE FROM User WHERE id = ?", [id]);
+const deleteUser = async (userId) => {
+    await db.User.destroy({
+        where: {
+            id: userId,
+        },
+    });
+    // return await connection.query("DELETE FROM User WHERE id = ?", [id]);
 };
 
 const getUserById = async (id) => {
-    const [rows, fields] = await connection.query(
-        "SELECT * FROM User WHERE id = ?",
-        [id]
-    );
-    let user = rows && rows.length ? rows[0] : [];
-    return user;
+    return await db.User.findOne({ where: { id } });
+    // const [rows, fields] = await connection.query(
+    //     "SELECT * FROM User WHERE id = ?",
+    //     [id]
+    // );
+    // let user = rows && rows.length ? rows[0] : [];
+    // return user;
 };
 
 const updateUser = async (email, username, id) => {
-    return await connection.query(
-        "UPDATE User SET email = ?, username = ? WHERE id = ?",
-        [email, username, id]
+    await db.User.update(
+        { email, username },
+        {
+            where: {
+                id,
+            },
+        }
     );
+    // return await connection.query(
+    //     "UPDATE User SET email = ?, username = ? WHERE id = ?",
+    //     [email, username, id]
+    // );
 };
 
 export default {
