@@ -38,9 +38,10 @@ const getUserList = async () => {
         include: {
             model: db.Role,
             where: {
-                id: 1,
+                id: 2,
             },
         },
+        attributes: ["name", "description"],
         raw: true,
         nest: true,
     });
