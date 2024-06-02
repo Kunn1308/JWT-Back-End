@@ -46,8 +46,8 @@ const getUserList = async () => {
         nest: true,
     });
 
-    console.log(">>> check newUser: ", newUser);
-    console.log(">>> check group: ", group);
+    // console.log(">>> check newUser: ", newUser);
+    // console.log(">>> check group: ", group);
     return await db.User.findAll();
     // const [rows, fields] = await connection.query("SELECT * FROM User");
     // return rows;
