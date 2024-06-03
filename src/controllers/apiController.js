@@ -42,7 +42,16 @@ const handleSignup = async (req, res) => {
     }
 };
 
+const handleSignin = async (req, res) => {
+    console.log(req.body);
+    res.status(200).json({
+        message: "ok",
+        data: "test api sign in",
+    });
+};
+
 export default {
     TestApi,
     handleSignup,
+    handleSignin,
 };
