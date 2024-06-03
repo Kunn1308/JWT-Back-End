@@ -34,6 +34,7 @@ const signUpNewUser = async (rawUserData) => {
             return {
                 EM: "The email already exists",
                 EC: -1,
+                DT: "email",
             };
         }
 
@@ -42,6 +43,7 @@ const signUpNewUser = async (rawUserData) => {
             return {
                 EM: "The phone already exists",
                 EC: -1,
+                DT: "phone",
             };
         }
 

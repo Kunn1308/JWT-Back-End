@@ -31,7 +31,7 @@ const handleSignup = async (req, res) => {
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,
-            DT: "",
+            DT: data.DT,
         });
     } catch (e) {
         return res.status(500).json({
