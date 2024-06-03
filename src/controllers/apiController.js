@@ -43,11 +43,21 @@ const handleSignup = async (req, res) => {
 };
 
 const handleSignin = async (req, res) => {
-    console.log(req.body);
-    res.status(200).json({
-        message: "ok",
-        data: "test api sign in",
-    });
+    try {
+        let data = await consumerService.SignInUser(req.body);
+
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT,
+        });
+    } catch (e) {
+        res.status(500).json({
+            EM: "error from server",
+            EC: -1,
+            DT: "",
+        });
+    }
 };
 
 export default {
