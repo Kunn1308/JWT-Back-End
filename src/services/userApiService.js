@@ -3,7 +3,14 @@ import db from "../models";
 const getAllUsers = async () => {
     try {
         let user = await db.User.findAll({
-            attributes: ["username", "email", "phone", "address", "gender"],
+            attributes: [
+                "id",
+                "username",
+                "email",
+                "phone",
+                "address",
+                "gender",
+            ],
             include: { model: db.Group, attributes: ["name", "description"] },
         });
 
