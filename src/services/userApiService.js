@@ -23,7 +23,7 @@ const getAllUsers = async () => {
         } else {
             return {
                 EM: "Not found User",
-                EC: 0,
+                EC: 1,
                 DT: [],
             };
         }
@@ -111,11 +111,25 @@ const updateUser = async (data) => {
 
 const deleteUser = async (id) => {
     try {
-        await db.User.destroy({
-            where: {
-                id,
-            },
-        });
+        if (id) {
+            await db.User.destroy({
+                where: {
+                    id,
+                },
+            });
+
+            return {
+                EM: "Delete user is successfully",
+                EC: 0,
+                DT: [],
+            };
+        } else {
+            return {
+                EM: "User is not found",
+                EC: 1,
+                DT: [],
+            };
+        }
     } catch (e) {
         console.log(e);
         return {
