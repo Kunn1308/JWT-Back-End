@@ -37,6 +37,44 @@ const getAllUsers = async () => {
     }
 };
 
+const getUsersWithPaginate = async (page, limit) => {
+    try {
+        let offset = (page - 1) * limit;
+        const { count, rows } = await db.User.findAndCountAll({
+            attributes: [
+                "id",
+                "username",
+                "email",
+                "phone",
+                "address",
+                "gender",
+            ],
+            include: { model: db.Group, attributes: ["name", "description"] },
+            offset: offset,
+            limit: limit,
+        });
+        let totalPages = Math.ceil(count / limit);
+        let data = {
+            totalPages,
+            totalRows: count,
+            users: rows,
+        };
+
+        return {
+            EM: "OK",
+            EC: 0,
+            DT: data,
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            EM: "Something wrong is service...",
+            EC: -2,
+            DT: "",
+        };
+    }
+};
+
 const createNewUser = async (data) => {
     try {
         await db.User.create();
@@ -93,4 +131,5 @@ export default {
     createNewUser,
     updateUser,
     deleteUser,
+    getUsersWithPaginate,
 };

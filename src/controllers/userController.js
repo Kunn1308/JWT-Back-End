@@ -1,13 +1,24 @@
 import userApiService from "../services/userApiService";
 const showFunc = async (req, res) => {
     try {
-        let data = await userApiService.getAllUsers();
+        if (req.query.page && req.query.limit) {
+            let { page, limit } = req.query;
+            let data = await userApiService.getUsersWithPaginate(+page, +limit);
 
-        return res.status(200).json({
-            EM: data.EM,
-            EC: data.EC,
-            DT: data.DT,
-        });
+            return res.status(200).json({
+                EM: data.EM,
+                EC: data.EC,
+                DT: data.DT,
+            });
+        } else {
+            let data = await userApiService.getAllUsers();
+
+            return res.status(200).json({
+                EM: data.EM,
+                EC: data.EC,
+                DT: data.DT,
+            });
+        }
     } catch (e) {
         console.log(e);
         res.status(500).json({
