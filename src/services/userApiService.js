@@ -53,7 +53,12 @@ const getUsersWithPaginate = async (page, limit) => {
                 "address",
                 "gender",
             ],
-            include: { model: db.Group, attributes: ["name", "description"] },
+            include: {
+                model: db.Group,
+                attributes: ["name", "description", "id"],
+            },
+            order: [["id", "DESC"]],
+
             offset: offset,
             limit: limit,
         });
