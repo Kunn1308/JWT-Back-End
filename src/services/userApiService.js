@@ -1,5 +1,9 @@
-import { where } from "sequelize";
 import db from "../models";
+import bcrypt from "bcrypt";
+const salt = bcrypt.genSaltSync(10);
+const hashUserPassword = (password) => {
+    return bcrypt.hashSync(password, salt);
+};
 const getAllUsers = async () => {
     try {
         let user = await db.User.findAll({
@@ -75,9 +79,43 @@ const getUsersWithPaginate = async (page, limit) => {
     }
 };
 
+const checkEmailExists = async (userEmail) => {
+    let user = await db.User.findOne({ where: { email: userEmail } });
+    return user ? true : false;
+};
+
+const checkPhoneExists = async (userPhone) => {
+    let user = await db.User.findOne({ where: { phone: userPhone } });
+    return user ? true : false;
+};
+
 const createNewUser = async (data) => {
     try {
-        await db.User.create();
+        let isEmailExist = await checkEmailExists(data.email);
+        if (isEmailExist) {
+            return {
+                EM: "The email already exists",
+                EC: -1,
+                DT: "email",
+            };
+        }
+        let isPhoneExist = await checkPhoneExists(data.phone);
+        if (isPhoneExist) {
+            return {
+                EM: "The phone already exists",
+                EC: -1,
+                DT: "phone",
+            };
+        }
+
+        let hashPassword = hashUserPassword(data.password);
+
+        await db.User.create({ ...data, password: hashPassword });
+        return {
+            EM: "Create new user successfully",
+            EC: 0,
+            DT: [],
+        };
     } catch (e) {
         console.log(e);
         return {
