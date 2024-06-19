@@ -206,6 +206,7 @@ const deleteUser = async (id) => {
 };
 
 export default {
+    hashUserPassword,
     getAllUsers,
     createNewUser,
     updateUser,

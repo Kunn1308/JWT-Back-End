@@ -120,6 +120,7 @@ const SignInUser = async (rawUserData) => {
 };
 
 export default {
+    hashUserPassword,
     signUpNewUser,
     SignInUser,
 };

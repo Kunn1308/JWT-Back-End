@@ -4,9 +4,9 @@ import initWebRoutes from "./routes/web";
 import initApiRoutes from "./routes/api";
 import methodOverride from "method-override";
 import configCors from "./configs/cors";
-require("dotenv").config();
-// import connection from "./configs/connectDB";
 
+import connectionRedis from "./configs/connectRedis";
+require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT;
 
@@ -18,7 +18,7 @@ configViewEngine(app);
 
 //config cors middleware
 configCors(app);
-
+app.use(connectionRedis);
 //init web routes
 initWebRoutes(app);
 initApiRoutes(app);
