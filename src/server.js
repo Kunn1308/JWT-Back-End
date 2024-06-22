@@ -4,7 +4,6 @@ import initWebRoutes from "./routes/web";
 import initApiRoutes from "./routes/api";
 import methodOverride from "method-override";
 import configCors from "./configs/cors";
-
 import connectionRedis from "./configs/connectRedis";
 require("dotenv").config();
 const app = express();
