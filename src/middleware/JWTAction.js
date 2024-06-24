@@ -1,11 +1,9 @@
 import jwt from "jsonwebtoken";
-const createJWT = () => {
-    let payload = { name: "Minh Ngọc", address: "tphcm" };
+const createJWT = (payload) => {
     let key = process.env.JWT_SECRET;
     let token = null;
     try {
         token = jwt.sign(payload, key);
-        console.log(token);
     } catch (e) {
         console.log(e);
     }
@@ -24,4 +22,4 @@ const verifyToken = (token) => {
     return data;
 };
 
-export { createJWT, verifyToken };
+export default { createJWT, verifyToken };

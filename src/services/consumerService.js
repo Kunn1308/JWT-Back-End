@@ -1,5 +1,7 @@
 import db from "../models";
 import bcrypt from "bcrypt";
+import JWTService from "./JWTService";
+import JWTAction from "../middleware/JWTAction";
 const { Op } = require("sequelize");
 
 const salt = bcrypt.genSaltSync(10);
@@ -55,6 +57,7 @@ const signUpNewUser = async (rawUserData) => {
             email: rawUserData.email,
             phone: rawUserData.phone,
             password: hashPassword,
+            groupId: 4,
         });
 
         return {
@@ -91,19 +94,23 @@ const SignInUser = async (rawUserData) => {
             );
 
             if (isCorrectPassword === true) {
+                let groupWithRoles = await JWTService.getGroupWithRoles(user);
+                let payload = {
+                    email: user.email,
+                    groupWithRoles,
+                    expiresIn: process.env.JWT_EXPIRES_IN,
+                };
+                let token = JWTAction.createJWT(payload);
                 return {
                     EM: "login successfully",
                     EC: 0,
-                    DT: "",
+                    DT: {
+                        access_token: token,
+                        groupWithRoles,
+                    },
                 };
             }
         }
-        console.log(
-            ">>> Not founder user with email/phone:  ",
-            rawUserData.valueSignIn,
-            "password: ",
-            rawUserData.password
-        );
         return {
             EM: "Your email/phone number or password is incorrect",
             EC: "-1",
