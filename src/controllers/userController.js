@@ -1,6 +1,8 @@
 import userApiService from "../services/userApiService";
 const showFunc = async (req, res) => {
     try {
+        console.log(req.cookies);
+
         if (req.query.page && req.query.limit) {
             let { page, limit } = req.query;
             let data = await userApiService.getUsersWithPaginate(+page, +limit);

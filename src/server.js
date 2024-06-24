@@ -5,6 +5,7 @@ import initApiRoutes from "./routes/api";
 import methodOverride from "method-override";
 import configCors from "./configs/cors";
 import connectionRedis from "./configs/connectRedis";
+import cookieParser from "cookie-parser";
 require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT;
@@ -14,6 +15,9 @@ app.use(methodOverride("_method"));
 app.use(express.json()); // phân tích json đến từ các yêu cầu http
 //config view engine
 configViewEngine(app);
+
+//cookie
+app.use(cookieParser());
 
 //config cors middleware
 configCors(app);
