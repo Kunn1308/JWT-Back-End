@@ -9,17 +9,13 @@ import JWTAction from "../middleware/JWTAction";
 const router = express.Router();
 
 const initApiRoutes = (app) => {
+    router.all("*", JWTAction.checkJWT, JWTAction.checkUserPermission);
     router.get("/test-api", apiController.TestApi);
     router.post("/signup", apiController.handleSignup);
     router.post("/signin", apiController.handleSignin);
 
     //user
-    router.get(
-        "/user/show",
-        JWTAction.checkJWT,
-        JWTAction.checkUserPermission,
-        userController.showFunc
-    );
+    router.get("/user/show", userController.showFunc);
     router.post("/user/create", userController.createFunc);
     router.put("/user/update", userController.updateFunc);
     router.delete("/user/delete", userController.deleteFunc);

@@ -1,4 +1,7 @@
 import jwt from "jsonwebtoken";
+
+const noneSecurePaths = ["/", "/signin", "/signup"];
+
 const createJWT = (payload) => {
     let key = process.env.JWT_SECRET;
     let token = null;
@@ -22,6 +25,7 @@ const verifyToken = (token) => {
 };
 
 const checkJWT = (req, res, next) => {
+    if (noneSecurePaths.includes(req.path)) return next();
     let cookies = req.cookies;
     if (cookies && cookies.jwt) {
         let token = cookies.jwt;
@@ -46,6 +50,7 @@ const checkJWT = (req, res, next) => {
 };
 
 const checkUserPermission = (req, res, next) => {
+    if (noneSecurePaths.includes(req.path)) return next();
     if (req.user) {
         let email = req.user.email;
         let roles = req.user.groupWithRoles.Roles;
