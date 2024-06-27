@@ -107,6 +107,8 @@ const SignInUser = async (rawUserData) => {
                     DT: {
                         access_token: token,
                         groupWithRoles,
+                        email: user.email,
+                        username: user.username,
                     },
                 };
             }
