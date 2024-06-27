@@ -94,9 +94,23 @@ const deleteFunc = async (req, res) => {
         });
     }
 };
+
+const getUserAccount = async (req, res) => {
+    return res.status(200).json({
+        EM: "check user success",
+        EC: 0,
+        DT: {
+            access_token: req.token,
+            groupWithRoles: req.user.groupWithRoles,
+            email: req.user.email,
+            username: req.user.username,
+        },
+    });
+};
 export default {
     showFunc,
     createFunc,
     updateFunc,
     deleteFunc,
+    getUserAccount,
 };

@@ -98,6 +98,7 @@ const SignInUser = async (rawUserData) => {
                 let payload = {
                     email: user.email,
                     groupWithRoles,
+                    username: user.username,
                     expiresIn: process.env.JWT_EXPIRES_IN,
                 };
                 let token = JWTAction.createJWT(payload);

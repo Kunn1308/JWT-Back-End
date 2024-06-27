@@ -1,6 +1,13 @@
 import jwt from "jsonwebtoken";
 
-const noneSecurePaths = ["/", "/signin", "/signup"];
+const noneSecurePaths = [
+    "/",
+    "/signin",
+    "/signup",
+    "/authentication/send_email",
+    "/authentication/verify_otp",
+    "/reset_password",
+];
 
 const createJWT = (payload) => {
     let key = process.env.JWT_SECRET;
@@ -32,6 +39,7 @@ const checkJWT = (req, res, next) => {
         let decoded = verifyToken(token);
         if (decoded) {
             req.user = decoded;
+            req.token = token;
             next();
         } else {
             return res.status(401).json({
@@ -50,7 +58,8 @@ const checkJWT = (req, res, next) => {
 };
 
 const checkUserPermission = (req, res, next) => {
-    if (noneSecurePaths.includes(req.path)) return next();
+    if (noneSecurePaths.includes(req.path) || req.path === "/account")
+        return next();
     if (req.user) {
         let email = req.user.email;
         let roles = req.user.groupWithRoles.Roles;

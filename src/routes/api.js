@@ -13,6 +13,7 @@ const initApiRoutes = (app) => {
     router.get("/test-api", apiController.TestApi);
     router.post("/signup", apiController.handleSignup);
     router.post("/signin", apiController.handleSignin);
+    router.get("/account", userController.getUserAccount);
 
     //user
     router.get("/user/show", userController.showFunc);
