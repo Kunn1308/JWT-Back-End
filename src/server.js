@@ -21,6 +21,7 @@ app.use(cookieParser());
 
 //config cors middleware
 configCors(app);
+
 app.use(connectionRedis);
 //init web routes
 initWebRoutes(app);
