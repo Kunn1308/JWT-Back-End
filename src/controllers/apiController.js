@@ -66,8 +66,26 @@ const handleSignin = async (req, res) => {
     }
 };
 
+const handleSignOut = (req, res) => {
+    try {
+        res.clearCookie("jwt");
+        return res.status(200).json({
+            EM: "clear cookies successfully",
+            EC: 0,
+            DT: "",
+        });
+    } catch (e) {
+        res.status(500).json({
+            EM: "error from server",
+            EC: -1,
+            DT: "",
+        });
+    }
+};
+
 export default {
     TestApi,
     handleSignup,
     handleSignin,
+    handleSignOut,
 };

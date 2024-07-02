@@ -4,6 +4,7 @@ const noneSecurePaths = [
     "/",
     "/signin",
     "/signup",
+    "/signout",
     "/authentication/send_email",
     "/authentication/verify_otp",
     "/reset_password",
