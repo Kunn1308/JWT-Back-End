@@ -5,7 +5,7 @@ import groupController from "../controllers/groupController";
 import forgotPasswordController from "../controllers/forgotPasswordController";
 import resetPasswordController from "../controllers/resetPasswordController";
 import JWTAction from "../middleware/JWTAction";
-
+import roleController from "../controllers/roleController";
 const router = express.Router();
 
 const initApiRoutes = (app) => {
@@ -21,6 +21,12 @@ const initApiRoutes = (app) => {
     router.post("/user/create", userController.createFunc);
     router.put("/user/update", userController.updateFunc);
     router.delete("/user/delete", userController.deleteFunc);
+
+    //role
+    router.get("/role/show", roleController.showFunc);
+    router.post("/role/create", roleController.createFunc);
+    router.put("/role/update", roleController.updateFunc);
+    router.delete("/role/delete", roleController.deleteFunc);
 
     //group
     router.get("/group/show", groupController.showFunc);
