@@ -33,14 +33,23 @@ const createNewRoles = async (roles) => {
 };
 
 const getAllRoles = async () => {
-    let role = await db.Role.findAll({
-        order: [["id", "DESC"]],
-    });
-    return {
-        EM: "Get all roles succeeds",
-        EC: 0,
-        DT: role,
-    };
+    try {
+        let role = await db.Role.findAll({
+            order: [["id", "DESC"]],
+        });
+        return {
+            EM: "Get all roles succeeds",
+            EC: 0,
+            DT: role,
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            EM: "Something wrong is service...",
+            EC: -2,
+            DT: "",
+        };
+    }
 };
 
 const deleteRole = async (id) => {
@@ -74,8 +83,35 @@ const deleteRole = async (id) => {
     }
 };
 
+const getRoleByGroup = async (id) => {
+    try {
+        let roles = await db.Group.findOne({
+            where: { id },
+            include: {
+                model: db.Role,
+                attributes: ["id", "url", "description"],
+                through: { attributes: [] },
+            },
+            attributes: ["id", "name", "description"],
+        });
+        return {
+            EM: "Get all roles succeeds",
+            EC: 0,
+            DT: roles,
+        };
+    } catch (e) {
+        console.log(e);
+        return {
+            EM: "Something wrong is service...",
+            EC: -2,
+            DT: "",
+        };
+    }
+};
+
 export default {
     createNewRoles,
     getAllRoles,
     deleteRole,
+    getRoleByGroup,
 };
